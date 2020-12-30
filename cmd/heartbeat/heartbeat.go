@@ -9,7 +9,7 @@ import (
 func neo4j_simple_test() error {
 	// NEO4J logic
 	uri := "bolt://localhost:7687"
-	username := "neo4j"
+	username := "neo"
 	password := "password"
 
 	//message, err := neo.HelloWorld(uri, username, password)
@@ -19,8 +19,8 @@ func neo4j_simple_test() error {
 	//}
 	//
 	//fmt.Println(message)
-	// Neo4j 4.0, defaults to no TLS therefore use bolt:// or neo4j://
-	// Neo4j 3.5, defaults to self-signed cetificates, TLS on, therefore use bolt+ssc:// or neo4j+ssc://
+	// Neo4j 4.0, defaults to no TLS therefore use bolt:// or neo://
+	// Neo4j 3.5, defaults to self-signed cetificates, TLS on, therefore use bolt+ssc:// or neo+ssc://
 	dbUri := uri
 	driver, err := neo4j.NewDriver(dbUri, neo4j.BasicAuth(username, password, ""))
 
@@ -36,13 +36,27 @@ func neo4j_simple_test() error {
 	session := driver.NewSession(neo4j.SessionConfig{})
 	defer session.Close()
 
-	result, err := session.Run("CREATE (n:Item { id: $id, name: $name }) RETURN n.id, n.name", map[string]interface{}{
-		"id":   21,
+	//result, err := session.Run("CREATE (n:Item { id: $id, name: $name }) RETURN n.id, n.name", map[string]interface{}{
+	//	"id":   21,
+	//	"name": "Item 21",
+	//})
+	//if err != nil {
+	//	return err
+	//}
+
+	label := "CONNECTED_TO"
+	myCmd := `MATCH(a:EVENT) WHERE a.name=$EventName
+	CREATE (n:INCHARGE {name:$name, gender: $gender})<-[:`+label+`]-(a) `
+
+	result, err := session.Run(myCmd, map[string]interface{}{
+		"EventName":   "Ahau",
 		"name": "Item 21",
+		"gender": "Whatsthat",
 	})
 	if err != nil {
 		return err
 	}
+
 
 	var record *neo4j.Record
 	for result.NextRecord(&record) {
@@ -55,6 +69,6 @@ func neo4j_simple_test() error {
 func main() {
 	err := neo4j_simple_test()
 	if err != nil {
-		fmt.Println("dam son")
+		fmt.Println("dam son", err)
 	}
 }

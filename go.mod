@@ -4,6 +4,9 @@ go 1.15
 
 require github.com/neo4j/neo4j-go-driver/v4 v4.2.0
 
-require github.com/SynaesthesiaFlow/stateful-mesh-service v0.0.0-20201229055934-067d6edf73fb
+require (
+	github.com/SynaesthesiaFlow/stateful-mesh-service v0.0.0-20201229055934-067d6edf73fb
+	github.com/neo4j/neo4j-go-driver v1.8.3 // indirect
+)
 
 replace github.com/SynaesthesiaFlow/stateful-mesh-service => ../stateful-mesh-service

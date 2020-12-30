@@ -17,13 +17,13 @@ type Neo4j_connection struct {
 func (neo *Neo4j_connection) CreateNewConnection() {
 	// NEO4J logic
 	neo.uri = "bolt://localhost:7687"
-	neo.username = "neo4j"
+	neo.username = "neo"
 	neo.password = "password"
 
 	var err error
 	neo.driver, err = neo4j.NewDriver(neo.uri, neo4j.BasicAuth(neo.username, neo.password, ""))
 	if err != nil {
-		fmt.Println("an error HERE neo4j Driver")
+		fmt.Println("an error HERE neo Driver")
 	}
 	//defer driver.Close()
 

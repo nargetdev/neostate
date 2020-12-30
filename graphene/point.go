@@ -19,17 +19,17 @@ func NeoPoint (p neo4j.Point3D) string {
 	closeStr := ") RETURN p"
 	resultString += closeStr
 
-	fmt.Println(resultString)
+	//fmt.Println(resultString)
 	return resultString
 }
 
 func generatePointParams(p neo4j.Point3D) string {
 	resultString := ""
-	resultString += "{point: ["
+	resultString += "{location: ["
 	resultString += fmt.Sprintf("%f", float64(p.X)) + ","
 	resultString += fmt.Sprintf("%f", float64(p.Y)) + ","
 	resultString += fmt.Sprintf("%f", float64(p.Z))
 	resultString += "]}"
 
-	return "{point: [0, 0, 0]}"
+	return resultString
 }
